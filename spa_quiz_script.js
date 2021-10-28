@@ -179,7 +179,7 @@ function setQuestionView(app_stage) {
 
 
 async function get_quiz_data(quiz_choice, current_question) {
-    var api_url = 'https://my-json-server.typicode.com/Elson0129/CUS1172_Assignment03'
+    var api_url = 'https://my-json-server.typicode.com/Elson0129/CUS1172_Assignment03_Quizdata'
     var endpoint = `${api_url}/${quiz_choice}/${current_question}`
 
     const data = await fetch(endpoint)
