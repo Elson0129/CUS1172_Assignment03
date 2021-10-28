@@ -13,42 +13,41 @@ document.addEventListener('DOMContentLoaded', ()  => {
     app_stage.current_model = {
         action : "start_app"
     }
-    update_view(app_stage)
+    
+     update_view(app_stage)
+    
 
     document.querySelector("#app_widget").onclick = (e) => {
+
         handle_widget_events(e)
     }
-
-    console.log(app_stage.current_model)
 });
 
 
 
 function handle_widget_events(e) {
 
-
-   
-    console.log(app_stage.quiz_choice)
-
     if(app_stage.current_stage == "#init_view") {
-
-
        
         if (e.target.dataset.action == "start_app") {
             
-            const params = new URLSearchParams(window.location.search)
 
-            if (params.has('quiz_choice')) {
-                quiz_choice = params.get('quiz_choice')
-            }  
-          
+            app_stage.quiz_choice = document.querySelector('input[name="quiz_choice"]:checked').value;
+
             app_stage.current_question = 0;
-            app_stage.current_model = quiz_choice[app_stage.current_question];
 
-            setQuestionView(app_stage);
+            var current_question_data = get_quiz_data(app_stage.quiz_choice, app_stage.current_question)
+            console.log(current_question_data)
+            //app_stage.current_model = current_question_data;
 
-            update_view(app_stage);
-           
+            //setQuestionView(app_stage);
+
+            //update_view(app_stage);
+
+
+            console.log(app_stage)
+            console.log(app_stage.current_model)
+            console.log(app_stage.current_model.question)
         }       
     }
 
@@ -63,18 +62,27 @@ function handle_widget_events(e) {
                 app_stage.current_incorrect++;
             }
 
-            app_stage.current_question++;
-            app_stage.questions_left--;
+            updateQuestion(app_stage)
             
-            app_stage.current_model = quiz_choice[app_stage.current_question]
             setQuestionView(app_stage)
 
             update_view(app_stage)
+
         }
     }
 
     if(app_stage.current_stage == "#question_textInput_view") {
+        if (e.targer.dataset.action == "submit") {
+            user_answer = document.querySelector(`#${app_stage.current_model.textFieldId}`).value;
+            isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model);
 
+            updateQuestion(app_stage)
+
+            setQuestionView(app_stage)
+            
+            update_view(app_stage)
+
+        }
     }
 
     if(app_stage.current_stage == "#question_trueFalse_view") {
@@ -88,10 +96,8 @@ function handle_widget_events(e) {
                 app_stage.current_incorrect++;
             }
 
-            app_stage.current_question++;
-            app_stage.questions_left--;
-            
-            app_stage.current_model = quiz_choice[app_stage.current_question]
+            updateQuestion(app_stage)
+
             setQuestionView(app_stage)
 
             update_view(app_stage)
@@ -110,10 +116,8 @@ function handle_widget_events(e) {
                 app_stage.current_incorrect++;
             }
 
-            app_stage.current_question++;
-            app_stage.questions_left--;
-            
-            app_stage.current_model = quiz_choice[app_stage.current_question]
+            updateQuestion(app_stage)
+
             setQuestionView(app_stage)
 
             update_view(app_stage)
@@ -124,6 +128,7 @@ function handle_widget_events(e) {
 
     }
 
+    return false
 }
 
 function check_user_response(user_answer, model) {
@@ -136,7 +141,11 @@ function check_user_response(user_answer, model) {
 function updateQuestion(app_stage) {
     if(app_stage.current_question < quiz_choice.length - 1) {
         app_stage.current_question = app_stage.current_question + 1
-        app_stage.current_model = quiz_choice[app_stage.current_question]
+        app_stage.questions_left--;
+
+        let current_question_data = get_quiz_data(app_stage.quiz_choice, app_stage.current_question)
+
+        app_stage.current_model = current_question_data;
 
     }
     else { 
@@ -151,36 +160,50 @@ function setQuestionView(app_stage) {
         return
     }
 
-    const params = new URLSearchParams(window.location.search)
-
-    if (params.has('quiz_choice')) {
-        quiz_choice = params.get('quiz_choice')
-    }    
-    
-
-    if (app_stage.current_model.quiz_choice.question_type == "mult_choice_text") {
+    if (app_stage.current_model.question_type == "mult_choice_text") {
         app_stage.current_stage = "#question_multChoice_view"
     }
-    else if (app_stage.current_model.quiz_choice.question_type == "question_input_text") {
+    else if (app_stage.current_model.question_type == "question_input_text") {
         app_stage.current_stage = "#question_textInput_view" 
     }
-    else if (app_stage.current_model.quiz_choice.question_type == "question_trueFalse") {
+    else if (app_stage.current_model.question_type == "question_trueFalse") {
         app_stage.current_stage = "#question_trueFalse_view"
     }
-    else if (app_stage.current_model.quiz_choice.question_type == "image_analysis") {
+    else if (app_stage.current_model.question_type == "image_analysis") {
         app_stage.current_stage == "#question_imageAnalysis_view"
     } 
-    else if (app_stage.current_model.quiz_choice.question_type == "mult_select_choice") {
+    else if (app_stage.current_model.question_type == "mult_select_choice") {
         app_stage.current_stage == "#question_selectChoice_view"
     }
 }
 
 
-async function update_view (app_stage) {
-    const data = await fetch("https://my-json-server.typicode.com/Elson0129/CUS1172_Assignment03/db")
-    const model = await data.json()
+async function get_quiz_data(quiz_choice, current_question) {
+    var api_url = 'https://my-json-server.typicode.com/Elson0129/CUS1172_Assignment03'
+    var endpoint = `${api_url}/${quiz_choice}/${current_question}`
+
+    const data = await fetch(endpoint)
+    var model = await data.json()
+
+    app_stage.current_model = model;
+
+    console.log("debug2")
+    console.log(model)
+    setQuestionView(app_stage);
+
+    update_view(app_stage);
+
+    return model
+}
+
+function update_view (app_stage) {
+
+    console.log("debug")
+    console.log(app_stage)
     const html_element = render_widget(app_stage.current_model, app_stage.current_stage)
     document.querySelector("#app_widget").innerHTML = html_element;
+
+    
 }
 
 const render_widget = (model, view) => {

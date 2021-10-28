@@ -29,7 +29,6 @@
         <script id="init_view" type="text/x-handlebars-template">
             <div class="container">
                 <h1 style="text-align: center; font-size: 45px;">Welcome</h1>
-                <form>
                     <label style="font-size: 20px;" for="name">Please enter your name</label><br>
                     <input id="name" type="text" name="user_name" placeholder="Name" required><br>
                     <h5 style="font-size: 20px; margin-top: 10px;">And choose a quiz to continue</h3>                    
@@ -37,8 +36,7 @@
                     <label for="quiz_one">Quiz 1</label>                
                     <input type="radio" id="quiz_two" name="quiz_choice" value="quiz_two" required>
                     <label for="quiz_two">Quiz 2</label><br>
-                    <input type="submit" id="start_quiz" data-action="{{this.action}}" value="Continue">
-                </form>
+                    <input type="button" id="start_quiz" data-action="{{this.action}}" value="Continue">  
             </div>
         </script>
         
@@ -53,18 +51,37 @@
         <script id="question_multChoice_view" type="text/x-handlebars-template">
             <div class="container">
                 <div class="row">
+                   
+                    <div class="col">
+                        <div class="counter">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
+                            <p class="count-text">Correct</p>
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
+                            <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
+                            <p class="count-text">Questions Remaining</p>                        
+                        </div>
+                    </div>
+                   
                     <div class ="col">
                         <div class="quiz-content-container">
                             <span style="text-align: center;">{{this.question}}</span>
                             
-                            <input type="radio" id="answer_choice_one" name="answer" value="{{}}">
-                            <label for="answer_choice_one">{{}}</label><br>
-                            <input type="radio" id="answer_choice_two" name="answer" value="">
-                            <label for="answer_choice_two">{{}}</label><br>
-                            <input type="radio" id="answer_choice_three" name="answer" value="">
-                            <label for="answer_choice_three">{{}}</label><br>
-                            <input type="radio" id="answer_choice_four" name="answer" value="">
-                            <label for="answer_choice_four">{{}}</label><br>
+                            <input type="radio" id="answer_choice_one" name="answer" value="{{this.choices[0]}}">
+                            <label for="answer_choice_one">{{this.choices[0]}}</label><br>
+                            <input type="radio" id="answer_choice_two" name="answer" value="{{this.choices[1]}}">
+                            <label for="answer_choice_two">{{this.choices[1]}}</label><br>
+                            <input type="radio" id="answer_choice_three" name="answer" value="{{this.choices[2]}}">
+                            <label for="answer_choice_three">{{this.choices[2]}}</label><br>
+                            <input type="radio" id="answer_choice_four" name="answer" value="{{this.choices[3]}}">
+                            <label for="answer_choice_four">{{this.choices[3]}}</label><br>
                             <button class="btn float-right" data-action="submit">Submit</button> 
                         </div>
                     </div>
@@ -76,12 +93,30 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
+                        <div class="counter">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
+                            <p class="count-text">Correct</p>
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
+                            <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
+                            <p class="count-text">Questions Remaining</p>                        
+                        </div>
+                    </div>
+
+                    <div class="col">
                         <div> 
                             <span style="text-align: center;">{{this.question}}</span>
-                            <input type="radio" id="answer_choice_true" name="answer">
-                            <label for="answer_choice_true"></label>
-                            <input type="radio" id="answer_choice_false" name="answer">
-                            <label for="answer_choice_false"></label>
+                            <input type="radio" id="answer_choice_true" name="answer" value="{{this.choices[0]}}">
+                            <label for="answer_choice_true">{{this.choices[0]}}</label>
+                            <input type="radio" id="answer_choice_false" name="answer" value="{{this.choices[1]}}">
+                            <label for="answer_choice_false">{{this.choices[1]}}</label>
                             <button class="btn float-right" data-action="submit">Submit</button>
                         </div>
                     </div>
@@ -92,6 +127,24 @@
         <script id="question_textInput_view" type="text/x-handlebars-template">
             <div class="container">
                 <div class="row">
+                    <div class="col">
+                        <div class="counter">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
+                            <p class="count-text">Correct</p>
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
+                            <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
+                            <p class="count-text">Questions Remaining</p>                        
+                        </div>
+                    </div>
+
                     <div class="col">
                         <div>
                             <span style="text-align: center;">{{this.question}}</span>
@@ -104,18 +157,82 @@
         </script>
        
         <script id="question_imageAnalysis_view" type="text/x-handlebars-template">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="counter">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
+                            <p class="count-text">Correct</p>
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
+                            <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
+                            <p class="count-text">Questions Remaining</p>                        
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        
+                        <div>
+                            <span style="text-align: center;">{{this.question}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </script>
         
         <script id="question_selectChoice_view" type="text/x-handlebars-template">
             <div class="container">
                 <div class="row">
                     <div class="col">
+                        <div class="counter">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
+                            <p class="count-text">Correct</p>
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
+                            <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
+                            <p class="count-text">Questions Remaining</p>                        
+                        </div>
+                    </div>
+
+                    <div class="col">
                         <div>
                             <span style="text-align: center;">{{this.question}}</span>
-                            <input type="checkbox" name="answer">
-                            <input type="checkbox" name="answer">
-                            <input type="checkbox" name="answer">
-                            <input type="checkbox" name="answer">
+                            <input type="checkbox" id="select1" name="select_choice" value="{{this.choices.[0]}}">
+                            <label for="select1">{{this.choices.[0]}}</label>
+                            <input type="checkbox" id="select2" name="select_choice" value="{{this.choices.[1]}}">
+                            <label for="select2">{{this.choices.[1]}}</label>
+                            <input type="checkbox" id="select3" name="select_choice" value="{{this.choices.[2]}}">
+                            <label for="select3">{{this.choices.[2]}}</label>
+                            <input type="checkbox" id="select4" name="select_choice" value="{{this.choices.[3]}}">
+                            <label for="select4">{{this.choices.[3]}}</label>
+
+                            <button class="btn float-right" data-action="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script id="question_feedback_view" type="text/x-handlebars-template">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div>
+                            
                         </div>
                     </div>
                 </div>
@@ -130,8 +247,8 @@
                             <span style="text-align: center; font-size: 35px;">You have reached the end of this quiz.</span>
                             <span style="text-align: center; font-size: 25px;">You can choose to start this quiz again, or go back to the home page</span>
                             <form>
-                                <button class="btn start-over-btn">Start Again</button>
-                                <button class="btn init-view-btn">Go Back</button>
+                                <button class="btn start-over-btn" data-action="start-again">Start Again</button>
+                                <button class="btn init-view-btn"data-action="return">Go Back</button>
                             </form>
                         </div>
                     </div>
