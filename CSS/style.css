@@ -1,5 +1,10 @@
 body{
     color: #e8e8e8;
     font-family: monospace;
-    text-shadow: 0 0 5px #c8c8c8;
+    text-shadow: 0 0 5px #c8c8c8, 5px 0 0 #0000, 0 5px 0 #0000;
+}
+
+.btn { 
+    background-color: #e8e8e8;
+    border-radius: none;
 }
