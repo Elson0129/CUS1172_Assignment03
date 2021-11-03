@@ -1,14 +1,18 @@
 const app_stage = {
     current_stage : "",
     quiz_choice : "",
+    user_name : "",
     is_quiz_one : false,
     is_correct : false,
+    did_pass : false,
     current_question : -1,
     current_model : {},
     current_correct : 0,
     current_incorrect : 0, 
+    current_score : 0,
     question_count: 20,
     questions_left: 20
+
 }
 
 document.addEventListener('DOMContentLoaded', ()  => {
@@ -34,8 +38,9 @@ function handle_widget_events(e) {
        
         if (e.target.dataset.action == "start_app") {
             
-
+            app_stage.user_name = document.querySelector('input[name="user_name"]').value
             app_stage.quiz_choice = document.querySelector('input[name="quiz_choice"]:checked').value;
+            
 
             app_stage.current_question = 0;
 
@@ -46,14 +51,9 @@ function handle_widget_events(e) {
             }
 
             var current_question_data = get_quiz_data(app_stage.quiz_choice, app_stage.current_question)
+
             console.log(current_question_data)
            
-            //app_stage.current_model = current_question_data;
-
-            //setQuestionView(app_stage);
-
-            //update_view(app_stage);
-
             console.log(app_stage)
             console.log(app_stage.current_model)
             console.log(app_stage.current_model.question)
@@ -68,7 +68,8 @@ function handle_widget_events(e) {
             isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model)
 
             if (isCorrect == true) {
-                app_stage.current_correct++;
+                //positiveFeedbackView();
+                app_stage.current_correct++;               
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
@@ -76,10 +77,12 @@ function handle_widget_events(e) {
                 app_stage.is_correct = false
             }
 
-            updateQuestion(app_stage)
+            app_stage.current_score = app_stage.current_correct * 5;
+            
+            
             
             setQuestionView(app_stage)
-
+            updateQuestion(app_stage)
             update_view(app_stage)
            
         }
@@ -102,6 +105,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = false
             }
 
+            app_stage.current_score = app_stage.current_correct * 5;
             updateQuestion(app_stage)
 
             setQuestionView(app_stage)
@@ -126,6 +130,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = false
             }
 
+            app_stage.current_score = app_stage.current_correct * 5;
             updateQuestion(app_stage)
 
             setQuestionView(app_stage)
@@ -150,6 +155,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = false
             }
 
+            app_stage.current_score = app_stage.current_correct * 5;
             updateQuestion(app_stage)
 
             setQuestionView(app_stage)
@@ -178,6 +184,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = false
             }
 
+            app_stage.current_score = app_stage.current_correct * 5;
             updateQuestion(app_stage)
 
             setQuestionView(app_stage)
@@ -187,30 +194,60 @@ function handle_widget_events(e) {
         }
     }
 
+    if(app_stage.current_stage == "#question_feedback_view") {
+        if(app_stage.is_correct = false) {
+            if(e.target.dataset.action == "continue") {
+                setQuestionView(app_stage)
+                update_view(app_stage)
+            }
+        }
+    }
+
     if(app_stage.current_stage == "#app_end_view") { 
-        app_stage.current_correct = 0;
-        app_stage.current_incorrect = 0;
+        if (app_stage.current_score < 80) {
+            app_stage.did_pass = false;
+        } else if (app_stage.current_score >= 80) {
+            app_stage.did_pass = true;
+        }
 
         if(e.target.dataset.action == "start_again") { 
-            app_stage.current_stage = "#init_view"
-
-            app_stage.current_model = { 
-                action : "start_app"
-            }
-
-            update_view(app_stage)
+            app_stage.current_question = 0
+            app_stage.current_incorrect = 0
+            app_stage.current_correct = 0
+            app_stage.current_score = 0
+            app_stage.questions_left = 20
 
         } 
         else if(e.target.dataset.action == "return") {
-            app_stage.quiz_choice = ""
             app_stage.current_stage = "#init_view"
+            app_stage.quiz_choice = ""
+            app_stage.current_model = {}
+            app_stage.current_question = 0
+            app_stage.current_incorrect = 0
+            app_stage.current_correct = 0
+            app_stage.current_score = 0
+            app_stage.current_question = -1
+            app_stage.questions_left = 20
 
             update_view(app_stage)
-
         }
     }
 
     return false
+}
+
+function positiveFeedbackView() {
+    
+    render_feedback_view("#feedback_positive_view")
+    if(app_stage.current_question == (app_stage.question_count - 1)) {
+        setTimeout(() => {
+            app_stage.current_stage = "#app_end_view"
+        }, 1000);
+    } else {
+        setTimeout(() => {
+            setQuestionView(app_stage);
+        }, 1000);
+    }
 }
 
 function check_user_response(user_answer, model) {
@@ -229,7 +266,7 @@ function check_user_response(user_answer, model) {
 }
 
 function updateQuestion(app_stage) {
-    if(app_stage.current_question < app_stage.question_count - 1) {
+    if(app_stage.current_question < (app_stage.question_count - 1)) {
         app_stage.current_question = app_stage.current_question + 1
         app_stage.questions_left--;
 
@@ -238,7 +275,7 @@ function updateQuestion(app_stage) {
         app_stage.current_model = current_question_data;
 
     }
-    else { 
+    else { // end of quiz
         app_stage.current_question = -2;
         app_stage.current_model = {}
     }
@@ -284,11 +321,21 @@ async function get_quiz_data(quiz_choice, current_question) {
     return model
 }
 
+function render_feedback_view(view) {
+    app_stage.current_stage = view
+    var source = document.querySelector(view).innerHTML;
+    var template = Handlebars.compile(source)
+    var html = template()
+
+    document.querySelector("#app_widget").innerHTML = html
+
+    console.log(app_stage)
+}
+
 function update_view (app_stage) {
 
     const html_element = render_widget(app_stage.current_model, app_stage.current_stage)
     document.querySelector("#app_widget").innerHTML = html_element;
-
     
 }
 

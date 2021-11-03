@@ -38,15 +38,7 @@
                     <label for="quiz_two">Quiz 2</label><br>
                     <input type="button" id="start_quiz" data-action="{{this.action}}" value="Continue">  
             </div>
-        </script>
-        
-        <script id="quiz_one_view" type="text/x-handlebars-template">
-            <h1>Quiz 1</h1>
-        </script>
-
-        <script id="quiz_two_view" type="text/x-handlebars-template">
-            <h1>Quiz 2</h1>
-        </script>
+        </script>       
 
         <script id="question_multChoice_view" type="text/x-handlebars-template">
             <div class="quiz-choice-heading-container">
@@ -69,6 +61,11 @@
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
                             <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
+                            <p class="count-text">Pts out of 100</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
@@ -120,6 +117,11 @@
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
+                            <p class="count-text">Pts out of 100</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
                             <p class="count-text">Questions Remaining</p>                        
                         </div>
@@ -153,6 +155,11 @@
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
                             <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
+                            <p class="count-text">Pts out of 100</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
@@ -193,6 +200,11 @@
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
                             <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
+                            <p class="count-text">Pts out of 100</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
@@ -247,6 +259,11 @@
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
+                            <p class="count-text">Pts out of 100</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
                             <p class="count-text">Questions Remaining</p>                        
                         </div>
@@ -271,19 +288,73 @@
             </div>
         </script>
 
-        <script id="question_feedback_view" type="text/x-handlebars-template">
+        <script id="feedback_positive_view" type="text/x-handlebars-template">
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div>
-                            {{#if is_correct}}
-                                <h1 style="text-align: center; font-size: 40px;">Correct!</h1>
-                            {{else}}
-                                <h1 style="text-align: center; font-size: 40px;">Incorrect</h1>
-                                <span style="text-align: center;">{{this.explanation}}</span>
+                        <div class="counter">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
+                            <p class="count-text">Correct</p>
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
+                            <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
+                            <p class="count-text">Pts out of 100</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
+                            <p class="count-text">Questions Remaining</p>                        
+                        </div>
+                    </div>
 
-                                <button class="btn float-right" data-action="submit">Continue</button>
-                            {{/if}}
+                    <div class="col">
+                        <div>
+                            <h1 style="text-align: center; font-size: 40px;">Correct!</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script id="feedback_negative_view" type="text/x-handlebars-template">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="counter">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
+                            <p class="count-text">Correct</p>
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
+                            <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
+                            <p class="count-text">Pts out of 100</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
+                            <p class="count-text">Questions Remaining</p>                        
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div>
+                            <h1 style="text-align: center; font-size: 40px;">Not quite right...</h1><br>
+                            <span style="font-size: 35px;">Correct Answer: <b>{{this.correct_answer}}</b></span><br>
+                            <span style="font-size: 35px;">Explanation:</span>
+                            <span style="font-size: 25px;">{{this.explanation}}</span>
                         </div>
                     </div>
                 </div>
@@ -295,7 +366,12 @@
                 <div clas="row">
                     <div class="col">
                         <div>
-                            <span style="text-align: center; font-size: 35px;">You have reached the end of this quiz.</span>
+                            <span style="text-align: center; font-size: 33px;">Congratulations, {{this.user_name}}, this the end of the quiz.</span>
+                            {{#if this.did_pass}}
+                            <span style="text-align: center; font-size: 28px;">You have passed the quiz!</span>
+                            {{else}}
+                            <span style="text-align: center; font-size: 28px;">You have failed the quiz.</span>
+                            {{/if}}
                             <span style="text-align: center; font-size: 25px;">You can choose to start this quiz again, or go back to the home page</span>
                             <form>
                                 <button class="btn start-over-btn" data-action="start-again">Start Again</button>
