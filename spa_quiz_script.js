@@ -68,23 +68,18 @@ function handle_widget_events(e) {
             isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model)
 
             if (isCorrect == true) {
-                //positiveFeedbackView();
+                positiveFeedbackView();
                 app_stage.current_correct++;               
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
+                render_feedback_view("#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
 
             app_stage.current_score = app_stage.current_correct * 5;
-            
-            
-            
-            setQuestionView(app_stage)
-            updateQuestion(app_stage)
-            update_view(app_stage)
-           
+ 
         }
     }
 
@@ -96,21 +91,18 @@ function handle_widget_events(e) {
             isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model);
 
             if (isCorrect == true) {
+                positiveFeedbackView();
                 app_stage.current_correct++;
                 app_stage.is_correct = true
             } 
            
             else if (isCorrect == false) {
+                render_feedback_view("#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
 
             app_stage.current_score = app_stage.current_correct * 5;
-            updateQuestion(app_stage)
-
-            setQuestionView(app_stage)
-            
-            update_view(app_stage)
 
         }
     }
@@ -122,20 +114,18 @@ function handle_widget_events(e) {
             isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model)
 
             if (isCorrect == true) {
+                positiveFeedbackView();
                 app_stage.current_correct++;
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
+                render_feedback_view("#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
 
             app_stage.current_score = app_stage.current_correct * 5;
-            updateQuestion(app_stage)
 
-            setQuestionView(app_stage)
-
-            update_view(app_stage)
         }
 
     }
@@ -147,20 +137,18 @@ function handle_widget_events(e) {
             isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model)
 
             if (isCorrect == true) {
+                positiveFeedbackView();
                 app_stage.current_correct++;
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
+                render_feedback_view("#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
 
             app_stage.current_score = app_stage.current_correct * 5;
-            updateQuestion(app_stage)
 
-            setQuestionView(app_stage)
-
-            update_view(app_stage)
         }
     }
 
@@ -176,15 +164,23 @@ function handle_widget_events(e) {
             isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model)
 
             if (isCorrect == true) {
+                positiveFeedbackView();
                 app_stage.current_correct++;
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
+                render_feedback_view("#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
 
             app_stage.current_score = app_stage.current_correct * 5;
+
+        }
+    }
+
+    if(app_stage.current_stage == "#feedback_negative_view") {
+        if(e.target.dataset.action == "continue") {
             updateQuestion(app_stage)
 
             setQuestionView(app_stage)
@@ -192,15 +188,7 @@ function handle_widget_events(e) {
             update_view(app_stage)
 
         }
-    }
-
-    if(app_stage.current_stage == "#question_feedback_view") {
-        if(app_stage.is_correct = false) {
-            if(e.target.dataset.action == "continue") {
-                setQuestionView(app_stage)
-                update_view(app_stage)
-            }
-        }
+        
     }
 
     if(app_stage.current_stage == "#app_end_view") { 
@@ -239,13 +227,16 @@ function handle_widget_events(e) {
 function positiveFeedbackView() {
     
     render_feedback_view("#feedback_positive_view")
+    
     if(app_stage.current_question == (app_stage.question_count - 1)) {
         setTimeout(() => {
             app_stage.current_stage = "#app_end_view"
         }, 1000);
     } else {
-        setTimeout(() => {
-            setQuestionView(app_stage);
+        setTimeout(() => {                   
+            setQuestionView(app_stage)
+            updateQuestion(app_stage)
+            update_view(app_stage)
         }, 1000);
     }
 }
@@ -296,14 +287,13 @@ function setQuestionView(app_stage) {
     else if (app_stage.current_model.question_type == "question_trueFalse") {
         app_stage.current_stage = "#question_trueFalse_view"
     }
-    else if (app_stage.current_model.question_type == "image_analysis") {
-        app_stage.current_stage == "#question_imageAnalysis_view"
+    else if (app_stage.current_model.question_type == "picture_question") {
+        app_stage.current_stage == "#question_picture_view"
     } 
     else if (app_stage.current_model.question_type == "mult_select_choice") {
         app_stage.current_stage == "#question_selectChoice_view"
     }
 }
-
 
 async function get_quiz_data(quiz_choice, current_question) {
     var api_url = 'https://my-json-server.typicode.com/Elson0129/CUS1172_Assignment03_Quizdata'
