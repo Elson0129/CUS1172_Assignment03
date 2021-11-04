@@ -73,7 +73,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
-                render_feedback_view("#feedback_negative_view");
+                render_feedback_view(app_stage.current_model, "#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
@@ -97,7 +97,7 @@ function handle_widget_events(e) {
             } 
            
             else if (isCorrect == false) {
-                render_feedback_view("#feedback_negative_view");
+                render_feedback_view(app_stage.current_model, "#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
@@ -119,7 +119,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
-                render_feedback_view("#feedback_negative_view");
+                render_feedback_view(app_stage.current_model, "#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
@@ -142,7 +142,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
-                render_feedback_view("#feedback_negative_view");
+                render_feedback_view(app_stage,current_model, "#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
@@ -169,7 +169,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
-                render_feedback_view("#feedback_negative_view");
+                render_feedback_view(app_stage.current_model, "#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
@@ -204,6 +204,7 @@ function handle_widget_events(e) {
             app_stage.current_correct = 0
             app_stage.current_score = 0
             app_stage.questions_left = 20
+            setQuestionView(app_stage)
 
         } 
         else if(e.target.dataset.action == "return") {
@@ -226,7 +227,7 @@ function handle_widget_events(e) {
 
 function positiveFeedbackView() {
     
-    render_feedback_view("#feedback_positive_view")
+    render_feedback_view(app_stage.current_model, "#feedback_positive_view")
     
     if(app_stage.current_question == (app_stage.question_count - 1)) {
         setTimeout(() => {
@@ -262,8 +263,6 @@ function updateQuestion(app_stage) {
         app_stage.questions_left--;
 
         let current_question_data = get_quiz_data(app_stage.quiz_choice, app_stage.current_question)
-
-        app_stage.current_model = current_question_data;
 
     }
     else { // end of quiz
@@ -311,11 +310,11 @@ async function get_quiz_data(quiz_choice, current_question) {
     return model
 }
 
-function render_feedback_view(view) {
+function render_feedback_view(model, view) {
     app_stage.current_stage = view
     var source = document.querySelector(view).innerHTML;
     var template = Handlebars.compile(source)
-    var html = template()
+    var html = template({...model,...app_stage})
 
     document.querySelector("#app_widget").innerHTML = html
 

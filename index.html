@@ -8,7 +8,9 @@
        
         <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
         
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="CSS/style.css">
+
 
         <script src="spa_quiz_script.js"></script>
 
@@ -86,19 +88,19 @@
                             <p class="count-text">Correct</p>
                         </div>
                         <div class="counter" style="margin-top: 15px;">
-                            <i class="fa fa-code fa-2x"></i>
+                            <i class="fa fa-bug fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
                             <p class="count-text">Incorrect</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_score}}</h2>
-                            <p class="count-text">Pts out of 100</p>                        
+                            <p class="count-text">Pts<br>out of 100</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
-                            <p class="count-text">Questions Remaining</p>                        
+                            <p class="count-text">Questions<br>Remaining</p>                        
                         </div>
                     </div>
                    
@@ -139,19 +141,19 @@
                             <p class="count-text">Correct</p>
                         </div>
                         <div class="counter" style="margin-top: 15px;">
-                            <i class="fa fa-code fa-2x"></i>
+                            <i class="fa fa-bug fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
                             <p class="count-text">Incorrect</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_score}}</h2>
-                            <p class="count-text">Pts out of 100</p>                        
+                            <p class="count-text">Pts<br>out of 100</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
-                            <p class="count-text">Questions Remaining</p>                        
+                            <p class="count-text">Questions<br>Remaining</p>                        
                         </div>
                     </div>
 
@@ -160,10 +162,10 @@
                             <span style="text-align: center;">{{this.question}}</span><br>
 
                             <input type="radio" id="answer_choice_true" name="answer" value="{{this.choices.[0]}}">
-                            <label for="answer_choice_true">{{this.choices.[0]}}</label>
+                            <label style="margin-top: 20px;" for="answer_choice_true">{{this.choices.[0]}}</label>
                             <input type="radio" id="answer_choice_false" name="answer" value="{{this.choices.[1]}}">
                             <label for="answer_choice_false">{{this.choices.[1]}}</label>
-                            <button class="btn float-right" data-action="answer">Submit</button>
+                            <button style="margin-top: 75px;" class="btn float-right" data-action="answer">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -180,19 +182,19 @@
                             <p class="count-text">Correct</p>
                         </div>
                         <div class="counter" style="margin-top: 15px;">
-                            <i class="fa fa-code fa-2x"></i>
+                            <i class="fa fa-bug fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
                             <p class="count-text">Incorrect</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_score}}</h2>
-                            <p class="count-text">Pts out of 100</p>                        
+                            <p class="count-text">Pts<br>out of 100</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
-                            <p class="count-text">Questions Remaining</p>                        
+                            <p class="count-text">Questions<br>Remaining</p>                        
                         </div>
                     </div>
 
@@ -225,19 +227,19 @@
                             <p class="count-text">Correct</p>
                         </div>
                         <div class="counter" style="margin-top: 15px;">
-                            <i class="fa fa-code fa-2x"></i>
+                            <i class="fa fa-bug fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
                             <p class="count-text">Incorrect</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_score}}</h2>
-                            <p class="count-text">Pts out of 100</p>                        
+                            <p class="count-text">Pts<br>out of 100</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
-                            <p class="count-text">Questions Remaining</p>                        
+                            <p class="count-text">Questions<br>Remaining</p>                        
                         </div>
                     </div>
 
@@ -246,7 +248,7 @@
                         <div>
                             <span style="text-align: center;">{{this.question}}</span><br>
 
-                            <!-- <img src="{{this.image}}"> -->
+                            <img src="{{this.image}}">
 
                             <input style="margin-top: 25px;" type="radio" id="answer_choice_one" name="answer" value="{{this.choices.[0]}}">
                             <label for="answer_choice_one">{{this.choices.[0]}}</label><br>
@@ -281,19 +283,19 @@
                             <p class="count-text">Correct</p>
                         </div>
                         <div class="counter" style="margin-top: 15px;">
-                            <i class="fa fa-code fa-2x"></i>
+                            <i class="fa fa-bug fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
                             <p class="count-text">Incorrect</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.current_score}}</h2>
-                            <p class="count-text">Pts out of 100</p>                        
+                            <p class="count-text">Pts<br>out of 100</p>                        
                         </div>
                         <div class="counter" style="margin-top: 15px;">
                             <i class="fa fa-code fa-2x"></i>
                             <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
-                            <p class="count-text">Questions Remaining</p>                        
+                            <p class="count-text">Questions<br>Remaining</p>                        
                         </div>
                     </div>
 

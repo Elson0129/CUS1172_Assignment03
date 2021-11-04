@@ -2,9 +2,15 @@ body{
     color: #e8e8e8;
     font-family: monospace;
     text-shadow: 0 0 5px #c8c8c8, 5px 0 0 #0000, 0 5px 0 #0000;
+    font-size: 18px;
 }
 
 .btn { 
     background-color: #e8e8e8;
     border-radius: none;
+}
+
+.counter { 
+    text-align: center;
+
 }
