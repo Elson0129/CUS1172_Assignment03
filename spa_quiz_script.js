@@ -130,11 +130,22 @@ function handle_widget_events(e) {
 
     }
 
-    if(app_stage.current_stage == "#question_imageAnalysis_view") {
+    if(app_stage.current_stage == "#question_multTextInput_view") {
         if(e.target.dataset.action == "answer") {
+            
+            let input1 = document.querySelector('input[name="text_answer1"]').value;
+            let input2 = document.querySelector('input[name="text_answer2"]').value;
+
+            e.target.dataset.answer = [input1, input2]
+
+            for(var i = 0; i < e.target.dataset.answer.length; i++) { 
+                if (e.target.dataset.answer[i] !== app_stage.current_model.correct_answer[i]) {
+                    isCorrect = false
+                } else {
+                    isCorrect = true
+                }
+            }
            
-            e.target.dataset.answer = document.querySelector('input[name="answer"]:checked').value;
-            isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model)
 
             if (isCorrect == true) {
                 positiveFeedbackView();
@@ -199,12 +210,14 @@ function handle_widget_events(e) {
         }
 
         if(e.target.dataset.action == "start_again") { 
-            app_stage.current_question = 0
+            app_stage.current_question = -1
             app_stage.current_incorrect = 0
             app_stage.current_correct = 0
             app_stage.current_score = 0
             app_stage.questions_left = 20
+            updateQuestion(app_stage)
             setQuestionView(app_stage)
+            update_view(app_stage)
 
         } 
         else if(e.target.dataset.action == "return") {
@@ -215,6 +228,7 @@ function handle_widget_events(e) {
             app_stage.current_incorrect = 0
             app_stage.current_correct = 0
             app_stage.current_score = 0
+            app_stage.current_model = {action : "start_app"}
             app_stage.current_question = -1
             app_stage.questions_left = 20
 
@@ -231,7 +245,10 @@ function positiveFeedbackView() {
     
     if(app_stage.current_question == (app_stage.question_count - 1)) {
         setTimeout(() => {
-            app_stage.current_stage = "#app_end_view"
+            app_stage.current_question = -2
+
+            setQuestionView(app_stage)
+            update_view(app_stage)
         }, 1000);
     } else {
         setTimeout(() => {                   
@@ -258,7 +275,7 @@ function check_user_response(user_answer, model) {
 }
 
 function updateQuestion(app_stage) {
-    if(app_stage.current_question < (app_stage.question_count - 1)) {
+    if(app_stage.current_question < 8) {
         app_stage.current_question = app_stage.current_question + 1
         app_stage.questions_left--;
 
@@ -286,8 +303,8 @@ function setQuestionView(app_stage) {
     else if (app_stage.current_model.question_type == "question_trueFalse") {
         app_stage.current_stage = "#question_trueFalse_view"
     }
-    else if (app_stage.current_model.question_type == "picture_question") {
-        app_stage.current_stage == "#question_picture_view"
+    else if (app_stage.current_model.question_type == "mult_text_input") {
+        app_stage.current_stage == "#question_multTextInput_view"
     } 
     else if (app_stage.current_model.question_type == "mult_select_choice") {
         app_stage.current_stage == "#question_selectChoice_view"

@@ -209,7 +209,7 @@
             </div>
         </script>
        
-        <script id="question_picture_view" type="text/x-handlebars-template">
+        <script id="question_multTextInput_view" type="text/x-handlebars-template">
             <div class="quiz-choice-heading-container">
                 {{#if is_quiz_one}}
                 <h1 style="text-align: center;  text-decoration: underline; margin-bottom: 15px;">You Are Taking Quiz 1</h1>
@@ -221,45 +221,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div class="counter">
-                            <i class="fa fa-code fa-2x"></i>
-                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
-                            <p class="count-text">Correct</p>
-                        </div>
-                        <div class="counter" style="margin-top: 15px;">
-                            <i class="fa fa-bug fa-2x"></i>
-                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
-                            <p class="count-text">Incorrect</p>                        
-                        </div>
-                        <div class="counter" style="margin-top: 15px;">
-                            <i class="fa fa-code fa-2x"></i>
-                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
-                            <p class="count-text">Pts<br>out of 100</p>                        
-                        </div>
-                        <div class="counter" style="margin-top: 15px;">
-                            <i class="fa fa-code fa-2x"></i>
-                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
-                            <p class="count-text">Questions<br>Remaining</p>                        
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        
-                        <div>
-                            <span style="text-align: center;">{{this.question}}</span><br>
-
-                            <img src="{{this.image}}">
-
-                            <input style="margin-top: 25px;" type="radio" id="answer_choice_one" name="answer" value="{{this.choices.[0]}}">
-                            <label for="answer_choice_one">{{this.choices.[0]}}</label><br>
-                            <input type="radio" id="answer_choice_two" name="answer" value="{{this.choices.[1]}}">
-                            <label for="answer_choice_two">{{this.choices.[1]}}</label><br>
-                            <input type="radio" id="answer_choice_three" name="answer" value="{{this.choices.[2]}}">
-                            <label for="answer_choice_three">{{this.choices.[2]}}</label><br>
-                            <input type="radio" id="answer_choice_four" name="answer" value="{{this.choices.[3]}}">
-                            <label for="answer_choice_four">{{this.choices.[3]}}</label><br>
-                            <button class="btn float-right" data-action="answer">Submit</button> 
-                        </div>
+                        <h1>HELLO</h1>
                     </div>
                 </div>
             </div>
@@ -325,9 +287,9 @@
                         <div>
                             <span style="text-align: center; font-size: 33px;">Congratulations, {{this.user_name}}, this the end of the quiz.</span>
                             {{#if this.did_pass}}
-                            <span style="text-align: center; font-size: 28px;">You have passed the quiz!</span>
+                            <span style="text-align: center; font-size: 28px;">You have passed the quiz!</span><br>
                             {{else}}
-                            <span style="text-align: center; font-size: 28px;">You have failed the quiz.</span>
+                            <span style="text-align: center; font-size: 28px;">You have failed the quiz.</span><br>
                             {{/if}}
                             <span style="text-align: center; font-size: 25px;">You can choose to start this quiz again, or go back to the home page</span>
                             
