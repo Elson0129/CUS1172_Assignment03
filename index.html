@@ -7,7 +7,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
        
         <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-        
+        <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+
         <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
         <link rel="stylesheet" href="CSS/style.css">
 
@@ -221,7 +222,36 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h1>HELLO</h1>
+                        <div class="counter">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_correct}}</h2>
+                            <p class="count-text">Correct</p>
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-bug fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_incorrect}}</h2>
+                            <p class="count-text">Incorrect</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.current_score}}</h2>
+                            <p class="count-text">Pts<br>out of 100</p>                        
+                        </div>
+                        <div class="counter" style="margin-top: 15px;">
+                            <i class="fa fa-code fa-2x"></i>
+                            <h2 class="timer count-title count-number">{{this.questions_left}}</h2>
+                            <p class="count-text">Questions<br>Remaining</p>                        
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <span style="text-align: center;">{{this.question}}</span><br>
+                        <label for="text_answer1">Response 1:</label>
+                        <input class="form-group form-control-sm" style="margin-top: 15px;" type="text" id="{{this.answer1FieldId}}" name="text_answer1" placeholder="Response 1"><br>
+                        <label for="text_answer2">Response 2:</label>
+                        <input class="form-group form-control-sm" style="margin-top: 15px;" type="text" id="{{this.answer2FieldId}}" name="text_answer2" placeholder="Response 2"><br>
+
+                        <button style="margin-top: 15px;" class="btn float right" data-action="answer">Submit</button>
                     </div>
                 </div>
             </div>

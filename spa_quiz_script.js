@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', ()  => {
     }
 });
 
-
 function handle_widget_events(e) {
 
     if(app_stage.current_stage == "#init_view") {
@@ -41,7 +40,6 @@ function handle_widget_events(e) {
             app_stage.user_name = document.querySelector('input[name="user_name"]').value
             app_stage.quiz_choice = document.querySelector('input[name="quiz_choice"]:checked').value;
             
-
             app_stage.current_question = 0;
 
             if (app_stage.quiz_choice == "quiz_one") {
@@ -133,19 +131,15 @@ function handle_widget_events(e) {
     if(app_stage.current_stage == "#question_multTextInput_view") {
         if(e.target.dataset.action == "answer") {
             
-            let input1 = document.querySelector('input[name="text_answer1"]').value;
-            let input2 = document.querySelector('input[name="text_answer2"]').value;
+            let user_response = []
+            let input1 = document.querySelector(`#${app_stage.current_model.answer1FieldId}`).value;
+            let input2 = document.querySelector(`#${app_stage.current_model.answer2FieldId}`).value;
 
-            e.target.dataset.answer = [input1, input2]
+            user_response.push(input1)
+            user_response.push(input2)
 
-            for(var i = 0; i < e.target.dataset.answer.length; i++) { 
-                if (e.target.dataset.answer[i] !== app_stage.current_model.correct_answer[i]) {
-                    isCorrect = false
-                } else {
-                    isCorrect = true
-                }
-            }
-           
+            isCorrect = check_user_response(user_response, app_stage.current_model)   
+         
 
             if (isCorrect == true) {
                 positiveFeedbackView();
@@ -153,7 +147,7 @@ function handle_widget_events(e) {
                 app_stage.is_correct = true
             } 
             else if (isCorrect == false) {
-                render_feedback_view(app_stage,current_model, "#feedback_negative_view");
+                render_feedback_view(app_stage.current_model, "#feedback_negative_view");
                 app_stage.current_incorrect++;
                 app_stage.is_correct = false
             }
@@ -165,14 +159,14 @@ function handle_widget_events(e) {
 
     if(app_stage.current_stage == "#question_selectChoice_view") {
         if (e.target.dataset.action == "answer") {
-            var choices = []
+            var user_response = []
             var selected = document.querySelector('input[name="select_choice"]:checked');
             for (var i = 0; i < selected.length; i++) {
-                choices.push(selected[i].value)
+                user_response.push(selected[i].value)
             }
 
-            e.target.dataset.answer = choices
-            isCorrect = check_user_response(e.target.dataset.answer, app_stage.current_model)
+            
+            isCorrect = check_user_response(user_response, app_stage.current_model)
 
             if (isCorrect == true) {
                 positiveFeedbackView();
@@ -197,9 +191,7 @@ function handle_widget_events(e) {
             setQuestionView(app_stage)
 
             update_view(app_stage)
-
-        }
-        
+        }       
     }
 
     if(app_stage.current_stage == "#app_end_view") { 
@@ -261,8 +253,8 @@ function positiveFeedbackView() {
 
 function check_user_response(user_answer, model) {
     
-    if(model.question_type == "mult_select_choice") { 
-        if (user_answer == model.correct_answers) {
+    if(model.question_type == "mult_select_choice" || model.question_type == "question_multInput_text") { 
+        if (JSON.stringify(user_answer) === JSON.stringify(model.correct_answer)) {
             return true;
         }
     } else {      
@@ -275,7 +267,7 @@ function check_user_response(user_answer, model) {
 }
 
 function updateQuestion(app_stage) {
-    if(app_stage.current_question < 8) {
+    if(app_stage.current_question < (app_stage.question_count - 1)) {
         app_stage.current_question = app_stage.current_question + 1
         app_stage.questions_left--;
 
@@ -303,11 +295,11 @@ function setQuestionView(app_stage) {
     else if (app_stage.current_model.question_type == "question_trueFalse") {
         app_stage.current_stage = "#question_trueFalse_view"
     }
-    else if (app_stage.current_model.question_type == "mult_text_input") {
-        app_stage.current_stage == "#question_multTextInput_view"
+    else if (app_stage.current_model.question_type == "question_multInput_text") {
+        app_stage.current_stage = "#question_multTextInput_view"
     } 
     else if (app_stage.current_model.question_type == "mult_select_choice") {
-        app_stage.current_stage == "#question_selectChoice_view"
+        app_stage.current_stage = "#question_selectChoice_view"
     }
 }
 
