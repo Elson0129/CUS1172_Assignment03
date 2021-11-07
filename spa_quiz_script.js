@@ -15,6 +15,9 @@ const app_stage = {
 
 }
 
+let timeSec = 0;
+let elapsedTime = 0;
+
 document.addEventListener('DOMContentLoaded', ()  => {
     app_stage.current_stage = "#init_view"
    
@@ -41,6 +44,10 @@ function handle_widget_events(e) {
             app_stage.quiz_choice = document.querySelector('input[name="quiz_choice"]:checked').value;
             
             app_stage.current_question = 0;
+
+            elapsedTime = setInterval(startTimer, 1000);
+            minutesCount = document.getElementById("minutes")
+            secondsCount = document.getElementById("seconds")
 
             if (app_stage.quiz_choice == "quiz_one") {
                 app_stage.is_quiz_one = true;
@@ -202,6 +209,11 @@ function handle_widget_events(e) {
         }
 
         if(e.target.dataset.action == "start_again") { 
+            timeSec = 0
+            secondsCount.innerHTML.pad(0)
+            minutesCount.innerHTML.pad(0)
+            elapsedTime = setInterval(startTimer, 1000)
+
             app_stage.current_question = -1
             app_stage.current_incorrect = 0
             app_stage.current_correct = 0
@@ -213,6 +225,10 @@ function handle_widget_events(e) {
 
         } 
         else if(e.target.dataset.action == "return") {
+            timeSec = 0
+            secondsCount.innerHTML.pad(0)
+            minutesCount.innerHTML.pad(0)
+           
             app_stage.current_stage = "#init_view"
             app_stage.quiz_choice = ""
             app_stage.current_model = {}
@@ -229,6 +245,21 @@ function handle_widget_events(e) {
     }
 
     return false
+}
+
+function startTimer() { 
+    ++timeSec;
+    secondsCount.innerHTML = pad(timeSec % 60);
+    minutesCount.innerHTML = pad(parseInt(timeSec/60));
+}
+
+function pad(x) {
+    var toString = x + "";
+    if (toString.length < 2) {
+        return "0" + toString;       
+    } else {
+        return toString;
+    }
 }
 
 function positiveFeedbackView() {
