@@ -1,1 +1,1 @@
-# CUS1172_Assignment03
+# Computer Science Quiz Application
